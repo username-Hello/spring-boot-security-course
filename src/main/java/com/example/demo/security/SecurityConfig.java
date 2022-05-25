@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.example.demo.security.Role.ADMIN;
 import static com.example.demo.security.Role.STUDENT;
 import static com.example.demo.security.Role.TRAINEE;
@@ -38,7 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 				.authenticated()
 				.and()
-				.formLogin();
+				.formLogin()
+				.and()
+				.rememberMe()
+					.tokenValiditySeconds((int) TimeUnit.DAYS.toMillis(21));
 	}
 
 	@Override
